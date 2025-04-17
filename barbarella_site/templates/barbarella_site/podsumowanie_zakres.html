@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Podsumowanie - Zakres dat</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.4/css/bulma.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="title is-3">Podsumowanie graczy</h1>
+        <form method="get" class="box">
+            {{ form.as_p }}
+            <button class="button is-link" type="submit">Pokaż podsumowanie</button>
+        </form>
+
+        {% if wyniki %}
+        <table class="table is-fullwidth">
+            <thead>
+                <tr>
+                    <th>Gracz</th>
+                    <th>Ilość</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for wynik in wyniki %}
+                <tr>
+                    <td>{{ wynik.0 }}</td>
+                    <td>{{ wynik.1 }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>Brak wyników do wyświetlenia.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

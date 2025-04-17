@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: barbarella-app
+    env: python
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "python manage.py runserver 0.0.0.0:10000"
+    envVars:
+      - key: DJANGO_SECRET_KEY
+        value: 'django-insecure-o(05a$@%2^2xjm+8cnd$ct9c26)4)&*(=6u4serg-7xr0oy!j'
+      - key: DATABASE_URL
+        value: 
+      - key: DEBUG
+        value: "True"
