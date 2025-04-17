@@ -5,13 +5,14 @@ from django.shortcuts import render
 from .models import PodsumowanieGraczy
 from django.db import connection
 from .forms import DateRangeForm  # poprawnie z dashboard.forms
+from datetime import datetime
 
 def podsumowanie_view(request):
     wszystkie = PodsumowanieGraczy.objects.all().order_by('gracz')
     paginator = Paginator(wszystkie, 50)  # 10 na stronę
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
-    return render(request, "barbarella_site/podsumowanie.html", {"page_obj": page_obj})
+    return render(request, "barbarella_site/podsumowanie.html", {"page_obj": page_obj, "year": datetime.now().year,})
 
 def podsumowanie_zakres(request):
     wyniki = []
@@ -37,3 +38,7 @@ def podsumowanie_zakres(request):
         'form': form,
         'wyniki': wyniki,
     })
+
+def podsumowanie_punkty_view(request):
+    # Tymczasowo pusta logika – dodamy jak powiesz co ma się dziać
+    return render(request, 'barbarella_site/podsumowanie_punkty.html')

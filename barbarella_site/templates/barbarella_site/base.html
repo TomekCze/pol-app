@@ -6,17 +6,24 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
 </head>
 <body>
-    <nav class="navbar is-primary">
-        <div class="navbar-brand">
-            <a class="navbar-item" href="/">Barbarella</a>
+<!-- MENU -->
+<nav class="navbar is-primary" role="navigation" aria-label="main navigation">
+    <div class="container">  <!-- Dodajemy container tutaj -->
+      <div class="navbar-brand">
+        <a class="navbar-item" href="/">
+          🧙 Barbarella
+        </a>
+      </div>
+  
+      <div class="navbar-menu">
+        <div class="navbar-start">
+          <a class="navbar-item" href="/">Podsumowanie</a>
+          <a class="navbar-item" href="/podsumowanie">Podsumowanie z zakresem</a>
+          <a class="navbar-item" href="/punkty/">Podsumowanie Punktów</a>
         </div>
-        <div class="navbar-menu">
-            <div class="navbar-start">
-                <a class="navbar-item" href="/">Strona główna</a>
-                <a class="navbar-item" href="/podsumowanie">Podsumowanie wg dat</a>
-            </div>
-        </div>
-    </nav>
+      </div>
+    </div>
+  </nav>
 
     <section class="section">
         <div class="container">

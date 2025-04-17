@@ -29,6 +29,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = True
 
 ALLOWED_HOSTS = ['.onrender.com']
+#ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -58,7 +59,7 @@ ROOT_URLCONF = 'django_bulma_supabase_project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'barbarella_site' / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
