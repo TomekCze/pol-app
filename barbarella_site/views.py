@@ -42,3 +42,37 @@ def podsumowanie_zakres(request):
 def podsumowanie_punkty_view(request):
     # Tymczasowo pusta logika – dodamy jak powiesz co ma się dziać
     return render(request, 'barbarella_site/podsumowanie_punkty.html')
+
+def podsumowanie_punkty_view(request):
+    form = DateRangeForm(request.GET or None)
+    wyniki = []
+    tabela = {}
+    lochy_set = set()
+    
+    if form.is_valid():
+        data_od = form.cleaned_data['data_od']
+        data_do = form.cleaned_data['data_do']
+
+        with connection.cursor() as cursor:
+            cursor.execute("""
+                SELECT * FROM get_lochy_punkty_summary(%s, %s)
+            """, [data_od, data_do])
+            rows = cursor.fetchall()
+
+        # Przekształcenie wyników do dicta
+        for gracz, nazwa_lochu, ilosc, punkty in rows:
+            lochy_set.add(nazwa_lochu)
+            if gracz not in tabela:
+                tabela[gracz] = {'lochy': {}, 'suma': 0, 'punkty': 0}
+            tabela[gracz]['lochy'][nazwa_lochu] = ilosc
+            tabela[gracz]['suma'] += ilosc
+            tabela[gracz]['punkty'] += punkty
+
+        lochy_list = sorted(lochy_set)
+        wyniki = tabela.items()
+
+    return render(request, 'barbarella_site/podsumowanie_punkty.html', {
+        'form': form,
+        'lochy_list': lochy_list if form.is_valid() else [],
+        'wyniki': wyniki
+    })

@@ -26,11 +26,9 @@
   </nav>
 
     <section class="section">
-        <div class="container">
             {% block content %}
             <!-- Treść podstrony -->
             {% endblock %}
-        </div>
     </section>
 
     <footer class="footer">
@@ -40,5 +38,6 @@
             </p>
         </div>
     </footer>
+    {% block extra_scripts %}{% endblock %}
 </body>
 </html>

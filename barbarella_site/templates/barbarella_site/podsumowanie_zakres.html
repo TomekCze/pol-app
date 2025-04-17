@@ -3,10 +3,18 @@
 
 {% block content %}
     <h1 class="title is-3">Podsumowanie graczy wg dat</h1>
-    <form method="get" class="box">
+
+<div class="box">
+    <div class="buttons">
+        <button type="button" class="button is-info" onclick="ustawDzisiaj()">Dzisiaj</button>
+        <button type="button" class="button is-info" onclick="ustawTydzien()">Ostatni tydzień</button>
+    </div>
+
+    <form method="get" id="dataForm">
         {{ form.as_p }}
-        <button class="button is-link" type="submit">Pokaż podsumowanie</button>
+        <button class="button is-primary" type="submit">Pokaż</button>
     </form>
+</div>
 
     {% if wyniki %}
     <table class="table is-fullwidth">
@@ -28,4 +36,48 @@
     {% else %}
     <p>Brak wyników do wyświetlenia.</p>
     {% endif %}
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    function ustawDzisiaj() {
+        const teraz = new Date();
+
+        // Ustawiamy początek dnia (00:00:00)
+        const dataOd = new Date(teraz.setHours(0, 0, 0, 0));
+
+        // Ustawiamy koniec dnia (23:59:59)
+        const dataDo = new Date(teraz.setHours(23, 59, 59, 999));
+
+        // Ustawiamy wartość w polach formularza
+        document.getElementById("id_data_od").value = formatDateToLocal(dataOd);
+        document.getElementById("id_data_do").value = formatDateToLocal(dataDo);
+    }
+
+    function ustawTydzien() {
+        const teraz = new Date();
+
+        // Ustawiamy koniec dnia (23:59:59)
+        const dataDo = new Date(teraz.setHours(23, 59, 59, 999));
+
+        // Ustawiamy początek dnia sprzed tygodnia (00:00:00)
+        const dataOd = new Date(teraz.setDate(teraz.getDate() - 7));
+        dataOd.setHours(0, 0, 0, 0);
+
+        // Ustawiamy wartość w polach formularza
+        document.getElementById("id_data_od").value = formatDateToLocal(dataOd);
+        document.getElementById("id_data_do").value = formatDateToLocal(dataDo);
+    }
+
+    // Funkcja formatująca datę do lokalnego formatu YYYY-MM-DDTHH:MM
+    function formatDateToLocal(date) {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+
+        return `${year}-${month}-${day}T${hours}:${minutes}`;
+    }
+</script>
 {% endblock %}

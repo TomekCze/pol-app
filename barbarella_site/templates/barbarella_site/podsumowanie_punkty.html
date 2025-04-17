@@ -1,8 +1,97 @@
 {% extends "barbarella_site/base.html" %}
+{% load dict_get %}
 
 {% block title %}Podsumowanie Punktów{% endblock %}
 
 {% block content %}
-  <h1 class="title is-3">Podsumowanie Punktów</h1>
-  <p>Wkrótce tutaj pojawi się podsumowanie punktów...</p>
+<section class="section" style="padding: 1rem;">
+    <h1 class="title is-3">Podsumowanie Punktów</h1>
+
+    <div class="box">
+      <div class="buttons">
+          <button type="button" class="button is-info" onclick="ustawDzisiaj()">Dzisiaj</button>
+          <button type="button" class="button is-info" onclick="ustawTydzien()">Ostatni tydzień</button>
+      </div>
+  
+      <form method="get" id="dataForm">
+          {{ form.as_p }}
+          <button class="button is-primary" type="submit">Pokaż</button>
+      </form>
+  </div>
+
+    {% if wyniki %}
+    <div class="table-container" style="overflow-x: auto; width: 100vw; padding-bottom: 1rem;">
+      <table class="table is-striped is-hoverable" style="min-width: max-content; font-size: 0.85rem;">
+        <thead>
+            <tr>
+                <th style="padding: 4px 8px;">Gracz</th>
+                {% for loch in lochy_list %}
+                    <th style="padding: 4px 8px; writing-mode: vertical-lr; white-space: nowrap;">{{ loch }}</th>
+                {% endfor %}
+                <th style="padding: 4px 8px; writing-mode: vertical-lr;">Suma Lochów</th>
+                <th style="padding: 4px 8px; writing-mode: vertical-lr;">Punkty</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for gracz, dane in wyniki %}
+            <tr>
+                <td style="padding: 4px 8px;">{{ gracz }}</td>
+                {% for loch in lochy_list %}
+                    <td style="padding: 4px 8px;">{{ dane.lochy|dict_get:loch|default:"0" }}</td>
+                {% endfor %}
+                <td style="padding: 4px 8px;">{{ dane.suma }}</td>
+                <td style="padding: 4px 8px;">{{ dane.punkty }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+    {% elif form.is_bound %}
+    <p>Brak danych dla wybranego zakresu.</p>
+    {% endif %}
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+  function ustawDzisiaj() {
+      const teraz = new Date();
+
+      // Ustawiamy początek dnia (00:00:00)
+      const dataOd = new Date(teraz.setHours(0, 0, 0, 0));
+
+      // Ustawiamy koniec dnia (23:59:59)
+      const dataDo = new Date(teraz.setHours(23, 59, 59, 999));
+
+      // Ustawiamy wartość w polach formularza
+      document.getElementById("id_data_od").value = formatDateToLocal(dataOd);
+      document.getElementById("id_data_do").value = formatDateToLocal(dataDo);
+  }
+
+  function ustawTydzien() {
+      const teraz = new Date();
+
+      // Ustawiamy koniec dnia (23:59:59)
+      const dataDo = new Date(teraz.setHours(23, 59, 59, 999));
+
+      // Ustawiamy początek dnia sprzed tygodnia (00:00:00)
+      const dataOd = new Date(teraz.setDate(teraz.getDate() - 7));
+      dataOd.setHours(0, 0, 0, 0);
+
+      // Ustawiamy wartość w polach formularza
+      document.getElementById("id_data_od").value = formatDateToLocal(dataOd);
+      document.getElementById("id_data_do").value = formatDateToLocal(dataDo);
+  }
+
+  // Funkcja formatująca datę do lokalnego formatu YYYY-MM-DDTHH:MM
+  function formatDateToLocal(date) {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      const hours = String(date.getHours()).padStart(2, '0');
+      const minutes = String(date.getMinutes()).padStart(2, '0');
+
+      return `${year}-${month}-${day}T${hours}:${minutes}`;
+  }
+</script>
 {% endblock %}
