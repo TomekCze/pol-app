@@ -4,9 +4,21 @@
 {% block title %}Barbarella - Home{% endblock %}
 
 {% block content %}
-<div style="display: flex; justify-content: center; align-items: center; min-height: 75vh;">
-    <img src="{% static 'barbarella_site/images/barbarella.jpg' %}" 
-         alt="Barbarella" 
-         style="max-width: 600px; width: 100%; height: auto; border-radius: 10px; box-shadow: 0 0 20px rgba(255, 0, 0, 0.6);">
+
+<!-- Tekst nad zdjęciem -->
+<div style="display: flex; justify-content: center; text-align: center; font-family: 'UnifrakturCook', cursive; background-color: #181818; color: #e0e0e0; padding: 2rem 1rem 0;">
+  <div>
+    <h1 style="font-size: 2.5rem; margin-bottom: 1rem;">BARBARELLA – GODDESS OF CLAN CHESTS</h1>
+    <p style="font-size: 1.3rem; margin-bottom: 1.5rem;">(She sees everything. She remembers every chest.)</p>
+    <p style="font-size: 1.1rem;">Didn't plunder the crypt today?<br>You're already on the list.</p>
+  </div>
 </div>
+
+<!-- Obrazek -->
+<div style="display: flex; justify-content: center; align-items: center; padding: 2rem 1rem;">
+  <img src="{% static 'barbarella_site/images/barbarella.jpg' %}" 
+       alt="Barbarella" 
+       style="max-width: 600px; width: 100%; height: auto; border-radius: 10px; box-shadow: 0 0 20px rgba(255, 0, 0, 0.6);">
+</div>
+
 {% endblock %}

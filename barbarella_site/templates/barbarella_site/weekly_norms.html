@@ -3,6 +3,23 @@
 {% block title %}Weekly Norms{% endblock %}
 
 {% block content %}
+
+<div class="container" style="margin-top: 2rem;">
+  <form method="get" action="">
+    <div class="field is-grouped is-align-items-center">
+      <label class="label mr-2">Wybierz klan:</label>
+      <div class="select">
+        <select name="klan" onchange="this.form.submit()">
+          <option value="">-- wybierz --</option>
+          {% for k in klany %}
+            <option value="{{ k }}" {% if selected_klan == k %}selected{% endif %}>{{ k }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+  </form>
+</div>
+{% if selected_klan %}
 <section class="section" style="min-height: calc(100vh - 160px);">
   <div class="container">
     <h1 class="title is-3">Weekly Norms</h1>
@@ -44,4 +61,5 @@
     </div>
   </div>
 </section>
+{% endif %}
 {% endblock %}
