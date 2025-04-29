@@ -7,7 +7,7 @@
 <section class="section" style="padding: 1rem;">
     <h1 class="title is-3">Podsumowanie Punktów</h1>
 
-    <div class="box">
+    <div class="box" style="background-color: #1c1c1c; color: #e0e0e0;"">
       <div class="buttons">
           <button type="button" class="button is-info" onclick="ustawDzisiaj()">Dzisiaj</button>
           <button type="button" class="button is-info" onclick="ustawTydzien()">Ostatni tydzień</button>
@@ -20,11 +20,11 @@
   </div>
 
     {% if wyniki %}
-    <div class="table-container" style="overflow-x: auto; width: 100vw; padding-bottom: 1rem;">
-      <table class="table is-striped is-hoverable" style="min-width: max-content; font-size: 0.85rem;">
+    <div>
+      <table class="table is-bordered is-striped is-hoverable" style="min-width: 1500px; font-size: 0.85rem;">
         <thead>
             <tr>
-                <th style="padding: 4px 8px;">Gracz</th>
+                <th class="sticky" style="padding: 4px 8px;">Gracz</th>
                 {% for loch in lochy_list %}
                     <th style="padding: 4px 8px; writing-mode: vertical-lr; white-space: nowrap;">{{ loch }}</th>
                 {% endfor %}
@@ -34,8 +34,8 @@
         </thead>
         <tbody>
             {% for gracz, dane in wyniki %}
-            <tr>
-                <td style="padding: 4px 8px;">{{ gracz }}</td>
+            <tr class="{% cycle 'has-background-grey-dark' 'has-background-grey' %}">
+                <td class="sticky" style="padding: 4px 8px;">{{ gracz }}</td>
                 {% for loch in lochy_list %}
                     <td style="padding: 4px 8px;">{{ dane.lochy|dict_get:loch|default:"0" }}</td>
                 {% endfor %}

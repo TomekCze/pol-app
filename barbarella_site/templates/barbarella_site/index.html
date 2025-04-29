@@ -1,0 +1,12 @@
+{% extends "barbarella_site/base.html" %}
+{% load static %}
+
+{% block title %}Barbarella - Home{% endblock %}
+
+{% block content %}
+<div style="display: flex; justify-content: center; align-items: center; min-height: 75vh;">
+    <img src="{% static 'barbarella_site/images/barbarella.jpg' %}" 
+         alt="Barbarella" 
+         style="max-width: 600px; width: 100%; height: auto; border-radius: 10px; box-shadow: 0 0 20px rgba(255, 0, 0, 0.6);">
+</div>
+{% endblock %}

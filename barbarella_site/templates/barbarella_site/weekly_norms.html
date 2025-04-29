@@ -1,0 +1,47 @@
+{% extends "barbarella_site/base.html" %}
+
+{% block title %}Weekly Norms{% endblock %}
+
+{% block content %}
+<section class="section" style="min-height: calc(100vh - 160px);">
+  <div class="container">
+    <h1 class="title is-3">Weekly Norms</h1>
+
+    <div class="table-container" style="overflow-x: auto;">
+      <table class="table is-bordered is-striped is-hoverable" style="min-width: max-content;">
+        <thead style="position: sticky; top: 0; background-color: #222; color: #fff;">
+          <tr>
+            <th rowspan="2">Gracz</th>
+            {% with pierwszy_z_danymi=gracze|dictsort:"gracz"|first %}
+              {% for tydzien in pierwszy_z_danymi.tygodnie %}
+                <th colspan="2">{{ tydzien.zakres }}</th>
+              {% endfor %}
+            {% endwith %}
+          </tr>
+          <tr>
+            {% with pierwszy_z_danymi=gracze|dictsort:"gracz"|first %}
+              {% for tydzien in pierwszy_z_danymi.tygodnie %}
+                <th>Skrzynki</th>
+                <th>Punkty</th>
+              {% endfor %}
+            {% endwith %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for gracz in gracze %}
+          <tr class="{% cycle 'has-background-grey-dark' 'has-background-grey' %}">
+            <td>{{ gracz.gracz }}</td>
+            {% for tydzien in gracz.tygodnie %}
+              <td>{{ tydzien.skrzynki }}</td>
+              <td style="color: {% if tydzien.punkty is not none and tydzien.punkty < 3000 %}red{% elif tydzien.punkty is not none and tydzien.punkty >= 3000 %}limegreen{% endif %}; font-weight: bold;">
+                {{ tydzien.punkty }}
+              </td>
+            {% endfor %}
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+{% endblock %}

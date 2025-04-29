@@ -5,7 +5,11 @@ from django.shortcuts import render
 from .models import PodsumowanieGraczy
 from django.db import connection
 from .forms import DateRangeForm  # poprawnie z dashboard.forms
-from datetime import datetime
+from datetime import datetime, timedelta
+
+# Strona główna - tylko obrazek
+def index_view(request):
+    return render(request, 'barbarella_site/index.html')
 
 def podsumowanie_view(request):
     wszystkie = PodsumowanieGraczy.objects.all().order_by('gracz')
@@ -76,3 +80,39 @@ def podsumowanie_punkty_view(request):
         'lochy_list': lochy_list if form.is_valid() else [],
         'wyniki': wyniki
     })
+#sekcja dla weekly norms
+def weekly_norms_view(request):
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT * FROM weekly_summary_last_6")  # Upewnij się, że to Twoja nazwa widoku w Supabase
+        rows = cursor.fetchall()
+
+    # Zakładamy, że kolumny są w tej kolejności:
+    # gracz, liczba_skrzyn_1, liczba_punktow_1, zakres_1, liczba_skrzyn_2, liczba_punktow_2, zakres_2, ..., zakres_6
+    gracze = []
+    for row in rows:
+        gracz = row[0]
+        tygodnie = []
+        for i in range(6):  # 6 tygodni
+            index = 1 + i * 3
+            tygodnie.append({
+                "skrzynki": row[index],
+                "punkty": row[index + 1],
+                "zakres": row[index + 2],
+            })
+        gracze.append({
+            "gracz": gracz,
+            "tygodnie": tygodnie
+        })
+
+    # ✅ Nowe: wyciągamy zakresy tygodni z pierwszego gracza, który ma je w pełni
+    zakresy = []
+    for g in gracze:
+        if all("zakres" in t and t["zakres"] for t in g["tygodnie"]):
+            zakresy = [t["zakres"] for t in g["tygodnie"]]
+            break
+
+    return render(request, "barbarella_site/weekly_norms.html", {
+        "gracze": gracze,
+        "zakresy": zakresy
+    })
+#koniec sekcja weekly norms
