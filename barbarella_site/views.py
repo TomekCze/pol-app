@@ -52,8 +52,8 @@ def podsumowanie_punkty_view(request):
     form = DateRangeForm(request.GET or None)
     wyniki = []
     tabela = {}
-    lochy_set = set()
-
+    lochy_dict = {}  # Będzie zawierać: {nazwa_lochu: sort}
+    
     if form.is_valid():
         data_od = form.cleaned_data['data_od']
         data_do = form.cleaned_data['data_do']
@@ -65,15 +65,16 @@ def podsumowanie_punkty_view(request):
             """, [data_od, data_do, klan])
             rows = cursor.fetchall()
 
-        for gracz, nazwa_lochu, ilosc, punkty in rows:
-            lochy_set.add(nazwa_lochu)
+        for gracz, nazwa_lochu, ilosc, punkty, sort in rows:
+            lochy_dict[nazwa_lochu] = sort
             if gracz not in tabela:
                 tabela[gracz] = {'lochy': {}, 'suma': 0, 'punkty': 0}
             tabela[gracz]['lochy'][nazwa_lochu] = ilosc
             tabela[gracz]['suma'] += ilosc
             tabela[gracz]['punkty'] += punkty
 
-        lochy_list = sorted(lochy_set)
+        # Sortujemy lochy według pola sort z funkcji
+        lochy_list = [nazwa for nazwa, _ in sorted(lochy_dict.items(), key=lambda x: x[1])]
         wyniki = tabela.items()
 
     return render(request, 'barbarella_site/podsumowanie_punkty.html', {
