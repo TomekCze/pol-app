@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <title>{% block title %}Barbarella{% endblock %}</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nosifer&family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
     <style>
 html, body {
   height: 100%;
@@ -54,6 +57,21 @@ body {
   flex-grow: 1;
 }
 
+.navbar-start {
+  flex-wrap: wrap;
+}
+.navbar-menu {
+  background-color: #181818 !important;
+}
+
+.navbar-item {
+  color: #e0e0e0 !important;
+}
+
+.navbar-item:hover {
+  background-color: #2a2a2a !important;
+  color: #ffffff !important;
+}
 .section {
   flex-grow: 1;
   padding: 2rem;
@@ -138,9 +156,15 @@ table.table {
         <a class="navbar-item" href="/">
           🧙 Barbarella
         </a>
+        <!-- Hamburger menu -->
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="mainNavbar">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
       </div>
   
-      <div class="navbar-menu">
+      <div id="mainNavbar" class="navbar-menu">
         <div class="navbar-start">
           <a class="navbar-item" href="/weekly-norms">Weekly norms</a> <!-- 4 tygodnie, kazdy tydzien ma zliczac punkty liczbę skrzyń i kolorowac zielono czerwono -->
           <a class="navbar-item" href="/punkty">Chests - specifically</a> <!-- tutaj ma być to co teraz jest w podsumowanie z zakresem -->
@@ -169,4 +193,18 @@ table.table {
   
   {% block extra_scripts %}{% endblock %}
 </body>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const burger = document.querySelector('.navbar-burger');
+    const menu = document.getElementById(burger.dataset.target);
+
+    burger.addEventListener('click', () => {
+      burger.classList.toggle('is-active');
+      menu.classList.toggle('is-active');
+    });
+  });
+</script>
 </html>
+
+

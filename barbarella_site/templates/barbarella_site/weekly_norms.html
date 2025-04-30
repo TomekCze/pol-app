@@ -7,10 +7,10 @@
 <div class="container" style="margin-top: 2rem;">
   <form method="get" action="">
     <div class="field is-grouped is-align-items-center">
-      <label class="label mr-2">Wybierz klan:</label>
+      <label class="label mr-2">Choose clan:</label>
       <div class="select">
         <select name="klan" onchange="this.form.submit()">
-          <option value="">-- wybierz --</option>
+          <option value="">-- select --</option>
           {% for k in klany %}
             <option value="{{ k }}" {% if selected_klan == k %}selected{% endif %}>{{ k }}</option>
           {% endfor %}
@@ -28,7 +28,7 @@
       <table class="table is-bordered is-striped is-hoverable" style="min-width: max-content;">
         <thead style="position: sticky; top: 0; background-color: #222; color: #fff;">
           <tr>
-            <th rowspan="2">Gracz</th>
+            <th rowspan="2">Player</th>
             {% with pierwszy_z_danymi=gracze|dictsort:"gracz"|first %}
               {% for tydzien in pierwszy_z_danymi.tygodnie %}
                 <th colspan="2">{{ tydzien.zakres }}</th>
@@ -38,8 +38,8 @@
           <tr>
             {% with pierwszy_z_danymi=gracze|dictsort:"gracz"|first %}
               {% for tydzien in pierwszy_z_danymi.tygodnie %}
-                <th>Skrzynki</th>
-                <th>Punkty</th>
+                <th>Chests</th>
+                <th>Points</th>
               {% endfor %}
             {% endwith %}
           </tr>
