@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 from django.core.paginator import Paginator
 from django.shortcuts import render
-from .models import PodsumowanieGraczy
+from .models import PodsumowanieGraczy, Scoring
 from django.db import connection
 from .forms import DateRangeForm  # poprawnie z dashboard.forms
 from datetime import datetime, timedelta
@@ -171,3 +171,9 @@ def weekly_norms_view(request):
     })
 """
 #koniec sekcja weekly norms
+
+#Początek scoring
+def scoring_view(request):
+    dane = Scoring.objects.all()
+    return render(request, 'barbarella_site/scoring.html', {'dane': dane})
+#Koniec scoring

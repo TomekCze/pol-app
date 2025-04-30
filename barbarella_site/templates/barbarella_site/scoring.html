@@ -1,0 +1,27 @@
+{% extends "barbarella_site/base.html" %}
+
+{% block title %}Scoring{% endblock %}
+
+{% block content %}
+
+<h1 class="title is-3">Scoring</h1>
+
+<div style="width: 500px; margin: 0 auto;">
+    <table class="table">
+    <thead>
+        <tr>
+        <th>Chests name</th>
+        <th>Points</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for entry in dane %}
+        <tr>
+            <td style="font-size: 0.95rem;">{{ entry.chests }}</td>
+            <td style="font-size: 0.95rem;">{{ entry.points }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+</div>
+{% endblock %}
