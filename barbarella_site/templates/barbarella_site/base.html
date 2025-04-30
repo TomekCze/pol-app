@@ -41,9 +41,20 @@ body {
   padding-right: 15px; /* Odstęp od krawędzi, żeby linia nie była zbyt blisko tekstu */
 }
 
-.navbar-menu .navbar-item:first-child {
-  border-left: 1px solid red; /* Dodajemy czerwoną linię po lewej stronie pierwszego elementu */
-  padding-left: 15px; /* Odstęp od krawędzi, żeby linia nie była zbyt blisko tekstu */
+@media (min-width: 768px) {
+  .navbar-menu .navbar-item:first-child {
+    border-left: 1px solid red; /* Dodajemy czerwoną linię po lewej stronie pierwszego elementu */
+    padding-left: 15px; /* Odstęp od krawędzi, żeby linia nie była zbyt blisko tekstu */
+  }
+}
+
+/* Ukryj kreskę na mobilkach */
+@media (max-width: 1023px) {
+  .navbar-item,
+  .navbar-link  {
+    border-right: none;
+    padding-right: 0;
+  }
 }
 
 .navbar-item:last-child {
@@ -74,18 +85,25 @@ body {
 }
 
 @media (max-width: 1023px) {
+  .navbar {
+    padding: 1rem 1.5rem;
+    min-height: 80px; /* wyższy pasek */
+  }
+
+  .navbar-brand .navbar-item {
+    font-size: 1.3rem; /* większy napis/logo */
+  }
+
   .navbar-burger {
-    font-size: 2rem;
+    font-size: 3rem;
     width: 3rem;
     height: 3rem;
+    color: white;
+    padding: 1rem;
   }
 
-  .navbar-menu {
-    font-size: 1.2rem;
-  }
-
-  .navbar-item {
-    font-size: 1.2rem;
+  .navbar-menu .navbar-item {
+    font-size: 1.3rem; /* większy tekst menu */
     padding: 1rem 1.5rem;
   }
 }
@@ -152,7 +170,7 @@ table.table td.sticky {
   position: sticky;
   left: 0;
   background-color: #1c1c1c;
-  z-index: 1;
+  z-index: 2;
   box-shadow: 2px 0 5px rgba(0,0,0,0.1);
 }
 

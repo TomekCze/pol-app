@@ -5,17 +5,17 @@
 
 {% block content %}
 <section class="section" style="padding: 1rem;">
-    <h1 class="title is-3">Podsumowanie Punktów</h1>
+    <h1 class="title is-3">Chests - specifically</h1>
 
     <div class="box" style="background-color: #1c1c1c; color: #e0e0e0;"">
       <div class="buttons">
-          <button type="button" class="button is-info" onclick="ustawDzisiaj()">Dzisiaj</button>
-          <button type="button" class="button is-info" onclick="ustawTydzien()">Ostatni tydzień</button>
+          <button type="button" class="button is-info" onclick="ustawDzisiaj()">Today</button>
+          <button type="button" class="button is-info" onclick="ustawTydzien()">Last week</button>
       </div>
   
       <form method="get" id="dataForm">
           {{ form.as_p }}
-          <button class="button is-primary" type="submit">Pokaż</button>
+          <button class="button is-primary" type="submit">Show</button>
       </form>
   </div>
 
@@ -24,12 +24,12 @@
       <table class="table is-bordered is-striped is-hoverable" style="min-width: 1500px; font-size: 0.85rem;">
         <thead>
             <tr>
-                <th class="sticky" style="padding: 4px 8px;">Gracz</th>
+                <th class="sticky" style="padding: 4px 8px;">Players</th>
                 {% for loch in lochy_list %}
                     <th style="padding: 4px 8px; writing-mode: vertical-lr; white-space: nowrap;">{{ loch }}</th>
                 {% endfor %}
-                <th style="padding: 4px 8px; writing-mode: vertical-lr;">Suma Lochów</th>
-                <th style="padding: 4px 8px; writing-mode: vertical-lr;">Punkty</th>
+                <th style="padding: 4px 8px; writing-mode: vertical-lr;">Count Chests</th>
+                <th style="padding: 4px 8px; writing-mode: vertical-lr;">Points</th>
             </tr>
         </thead>
         <tbody>
@@ -47,7 +47,7 @@
     </table>
     </div>
     {% elif form.is_bound %}
-    <p>Brak danych dla wybranego zakresu.</p>
+    <p>No data for this parameters</p>
     {% endif %}
 </section>
 {% endblock %}

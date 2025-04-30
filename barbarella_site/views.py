@@ -47,23 +47,24 @@ def podsumowanie_punkty_view(request):
     # Tymczasowo pusta logika – dodamy jak powiesz co ma się dziać
     return render(request, 'barbarella_site/podsumowanie_punkty.html')
 
+#Sekcja CHESTS - SPECIFICALLY
 def podsumowanie_punkty_view(request):
     form = DateRangeForm(request.GET or None)
     wyniki = []
     tabela = {}
     lochy_set = set()
-    
+
     if form.is_valid():
         data_od = form.cleaned_data['data_od']
         data_do = form.cleaned_data['data_do']
+        klan = form.cleaned_data.get('klan')  # Może być None
 
         with connection.cursor() as cursor:
             cursor.execute("""
-                SELECT * FROM get_lochy_punkty_summary(%s, %s)
-            """, [data_od, data_do])
+                SELECT * FROM get_lochy_punkty_summary(%s::timestamp, %s::timestamp, %s::TEXT)
+            """, [data_od, data_do, klan])
             rows = cursor.fetchall()
 
-        # Przekształcenie wyników do dicta
         for gracz, nazwa_lochu, ilosc, punkty in rows:
             lochy_set.add(nazwa_lochu)
             if gracz not in tabela:
@@ -80,6 +81,8 @@ def podsumowanie_punkty_view(request):
         'lochy_list': lochy_list if form.is_valid() else [],
         'wyniki': wyniki
     })
+#KONIEC Sekcja CHESTS - SPECIFICALLY
+
 #sekcja dla weekly norms
 def weekly_norms_view(request):
     # Pobieranie wybranego klanu z zapytania GET
