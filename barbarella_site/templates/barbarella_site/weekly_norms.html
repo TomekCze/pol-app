@@ -50,9 +50,20 @@
             <td>{{ gracz.gracz }}</td>
             {% for tydzien in gracz.tygodnie %}
               <td>{{ tydzien.skrzynki }}</td>
-              <td style="color: {% if tydzien.punkty is not none and tydzien.punkty < 3000 %}red{% elif tydzien.punkty is not none and tydzien.punkty >= 3000 %}limegreen{% endif %}; font-weight: bold;">
-                {{ tydzien.punkty }}
-              </td>
+
+              <td style="color: 
+              {% if tydzien.punkty is not none and tydzien.punkty < 3000 %}
+                  red
+              {% elif tydzien.punkty is not none and tydzien.punkty < 4000 %}
+                  blue
+              {% elif tydzien.punkty is not none and tydzien.punkty >= 4000 %}
+                  limegreen
+              {% else %}
+                  inherit
+              {% endif %}
+                ; font-weight: bold;">
+                    {{ tydzien.punkty }}
+                </td>
             {% endfor %}
           </tr>
           {% endfor %}

@@ -177,3 +177,9 @@ def scoring_view(request):
     dane = Scoring.objects.all()
     return render(request, 'barbarella_site/scoring.html', {'dane': dane})
 #Koniec scoring
+
+#Poczatek tinman
+def tinman_view(request):
+    # Tymczasowo pusta logika – dodamy jak powiesz co ma się dziać
+    return render(request, 'barbarella_site/tinman.html')
+#Koniec tinman
