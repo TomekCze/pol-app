@@ -180,6 +180,51 @@ def scoring_view(request):
 
 #Poczatek tinman
 def tinman_view(request):
-    # Tymczasowo pusta logika – dodamy jak powiesz co ma się dziać
-    return render(request, 'barbarella_site/tinman.html')
+    # Pobieranie wybranego klanu z zapytania GET
+    selected_klan = request.GET.get("klan")
+
+    # Pobierz listę klanów (zwracamy tylko skroty klanów)
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT nazwa_skrot FROM klany ORDER BY nazwa_skrot")
+        klany = [row[0] for row in cursor.fetchall()]
+
+    gracze = []
+    zakresy = []
+
+    if selected_klan:
+        # Używamy funkcji `get_weekly_tinman_by_klan` zamiast bezpośredniego zapytania do widoku
+        with connection.cursor() as cursor:
+            cursor.execute("""
+                SELECT * FROM get_weekly_tinman_by_klan(%s)
+            """, [selected_klan])
+            rows = cursor.fetchall()
+
+        # Przetwarzamy dane o graczach
+        for row in rows:
+            gracz = row[0]
+            tygodnie = []
+            for i in range(7):  # 7 tygodni (indeks 1 + 6 tygodni danych)
+                index = 1 + i * 2
+                tygodnie.append({
+                    "skrzynki": row[index],
+                    "zakres": row[index + 1],
+                })
+            gracze.append({
+                "gracz": gracz,
+                "tygodnie": tygodnie
+            })
+
+        # Wyciągamy zakresy tygodni dla graczy
+        for g in gracze:
+            if all("zakres" in t and t["zakres"] for t in g["tygodnie"]):
+                zakresy = [t["zakres"] for t in g["tygodnie"]]
+                break  # Zakresy są wspólne dla wszystkich graczy
+
+    # Renderujemy stronę z danymi
+    return render(request, "barbarella_site/tinman.html", {
+        "gracze": gracze,
+        "zakresy": zakresy,
+        "klany": klany,
+        "selected_klan": selected_klan
+    })
 #Koniec tinman

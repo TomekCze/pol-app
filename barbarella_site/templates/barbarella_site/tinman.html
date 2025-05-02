@@ -1,18 +1,69 @@
 {% extends "barbarella_site/base.html" %}
-{% load static %}
 
-{% block title %}Barbarella - Home{% endblock %}
+{% block title %}Tinman{% endblock %}
 
 {% block content %}
 
 <!-- Tekst nad zdjęciem -->
 <div style="display: flex; justify-content: center; text-align: center; font-family: 'Grenze Gotisch', serif; background-color: #181818; color: #e0e0e0; padding: 2rem 1rem 0;">
     <div>
-        <h1 style="font-size: 2.5rem; margin-bottom: 1rem;">SOON</h1>
         <p style="font-size: 4rem;">⚔️🛡️🤖</p>
     </div>
 
 </div>
 
-
+<div class="container" style="margin-top: 2rem;">
+    <form method="get" action="">
+      <div class="field is-grouped is-align-items-center">
+        <label class="label mr-2">Choose clan:</label>
+        <div class="select">
+          <select name="klan" onchange="this.form.submit()">
+            <option value="">-- select --</option>
+            {% for k in klany %}
+              <option value="{{ k }}" {% if selected_klan == k %}selected{% endif %}>{{ k }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+    </form>
+  </div>
+  {% if selected_klan %}
+  <section class="section" style="min-height: calc(100vh - 160px);">
+    <div class="container">
+      <h1 class="title is-3">Tinman</h1>
+  
+      <div class="table-container" style="overflow-x: auto;">
+        <table class="table is-bordered is-striped is-hoverable" style="min-width: max-content;">
+          <thead style="position: sticky; top: 0; background-color: #222; color: #fff;">
+            <tr>
+              <th rowspan="2">Player</th>
+              {% with pierwszy_z_danymi=gracze|dictsort:"gracz"|first %}
+                {% for tydzien in pierwszy_z_danymi.tygodnie %}
+                  <th colspan="1">{{ tydzien.zakres }}</th>
+                {% endfor %}
+              {% endwith %}
+            </tr>
+            <tr>
+              {% with pierwszy_z_danymi=gracze|dictsort:"gracz"|first %}
+                {% for tydzien in pierwszy_z_danymi.tygodnie %}
+                  <th>Chests</th>
+                {% endfor %}
+              {% endwith %}
+            </tr>
+          </thead>
+          <tbody>
+            {% for gracz in gracze %}
+            <tr class="{% cycle 'has-background-grey-dark' 'has-background-grey' %}">
+              <td>{{ gracz.gracz }}</td>
+              {% for tydzien in gracz.tygodnie %}
+                <td>{{ tydzien.skrzynki }}</td>
+              {% endfor %}
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+  {% endif %}
 {% endblock %}
