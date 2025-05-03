@@ -210,6 +210,12 @@ table.table td.sticky {
     </div>
   </nav>
 
+  {% if latest_lochy_date %}
+  <div style="background-color: #222; color: #ccc; text-align: center; padding: 0.5rem; font-size: 0.9rem;">
+    📅 Latest update: {{ latest_lochy_date|date:"d.m.Y H:i" }}
+  </div>
+  {% endif %}
+
   <section class="section">
     {% block content %}
     <!-- Treść podstrony -->
