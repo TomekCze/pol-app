@@ -52,11 +52,11 @@
               <td>{{ tydzien.skrzynki }}</td>
 
               <td style="color: 
-              {% if tydzien.punkty is not none and tydzien.punkty < 3000 %}
+              {% if tydzien.punkty is not none and tydzien.punkty < 4200 %}
                   #ff6347
-              {% elif tydzien.punkty is not none and tydzien.punkty < 4000 %}
+              {% elif tydzien.punkty is not none and tydzien.punkty < 5800 %}
                   #66ccff
-              {% elif tydzien.punkty is not none and tydzien.punkty >= 4000 %}
+              {% elif tydzien.punkty is not none and tydzien.punkty >= 5800 %}
                   limegreen
               {% else %}
                   inherit
