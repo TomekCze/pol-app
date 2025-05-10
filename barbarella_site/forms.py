@@ -21,6 +21,6 @@ class DateRangeForm(forms.Form):
         super().__init__(*args, **kwargs)
         # Wczytaj listę klanów z bazy danych
         with connection.cursor() as cursor:
-            cursor.execute("SELECT nazwa_skrot FROM klany czy_aktywne = 1 ORDER BY nazwa_skrot")
+            cursor.execute("SELECT nazwa_skrot FROM klany where czy_aktywne = 1 ORDER BY nazwa_skrot")
             klany = cursor.fetchall()
         self.fields['klan'].choices = [('', 'Wybierz klan')] + [(k[0], k[0]) for k in klany]
