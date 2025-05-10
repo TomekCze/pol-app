@@ -91,7 +91,7 @@ def weekly_norms_view(request):
 
     # Pobierz listę klanów (zwracamy tylko skroty klanów)
     with connection.cursor() as cursor:
-        cursor.execute("SELECT nazwa_skrot FROM klany ORDER BY nazwa_skrot")
+        cursor.execute("SELECT nazwa_skrot FROM klany where czy_aktywne = 1 ORDER BY nazwa_skrot")
         klany = [row[0] for row in cursor.fetchall()]
 
     gracze = []
