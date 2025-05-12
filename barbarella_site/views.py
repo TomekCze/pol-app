@@ -232,7 +232,7 @@ def tinman_view(request):
 #Początek ogłoszenia
 def announcements_view(request):
     with connection.cursor() as cursor:
-        cursor.execute("SELECT * FROM announcements ORDER BY created_at DESC")
+        cursor.execute("SELECT * FROM announcements where is_active = 1 ORDER BY created_at DESC")
         rows = cursor.fetchall()
         columns = [col[0] for col in cursor.description]
         announcements = [dict(zip(columns, row)) for row in rows]
