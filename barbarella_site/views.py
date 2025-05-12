@@ -228,3 +228,16 @@ def tinman_view(request):
         "selected_klan": selected_klan
     })
 #Koniec tinman
+
+#Początek ogłoszenia
+def announcements_view(request):
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT * FROM announcements ORDER BY created_at DESC")
+        rows = cursor.fetchall()
+        columns = [col[0] for col in cursor.description]
+        announcements = [dict(zip(columns, row)) for row in rows]
+
+    return render(request, "barbarella_site/announcements.html", {
+        "announcements": announcements
+    })
+#Koniec ogłoszenia

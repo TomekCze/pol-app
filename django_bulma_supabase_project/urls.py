@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from barbarella_site.views import podsumowanie_view, podsumowanie_zakres, podsumowanie_punkty_view, index_view, weekly_norms_view, scoring_view, tinman_view
+from barbarella_site.views import podsumowanie_view, podsumowanie_zakres, podsumowanie_punkty_view, index_view, weekly_norms_view, scoring_view, tinman_view , announcements_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,4 +26,5 @@ urlpatterns = [
     path('scoring/', scoring_view, name='scoring'),
     path('weekly-norms/', weekly_norms_view, name='weekly_norms'),
     path('tinman/', tinman_view, name='tinman'),
+    path("announcements/", announcements_view, name="announcements"),
 ]
