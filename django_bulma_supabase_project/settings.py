@@ -29,7 +29,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 #ALLOWED_HOSTS = []
 ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "").split(",")
 
-DEBUG = False
+DEBUG = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
