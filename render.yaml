@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: pol-app
+    name: barbarella-app
     env: python
     buildCommand: |
       pip install -r requirements.txt
