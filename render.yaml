@@ -8,7 +8,7 @@ services:
     startCommand: gunicorn barbarella_project.wsgi:application --bind 0.0.0.0:10000
     envVars:
       - key: DJANGO_SECRET_KEY
-        value: 'django-insecure-o(05a$@%2^2xjm+8cnd$ct9c26)4)&*(=6u4serg-7xr0oy!j'
+        fromEnvVar: SECRET_KEY
       - key: DEBUG
         value: "False"
       - key: PORT
